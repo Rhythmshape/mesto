@@ -16,7 +16,6 @@
   transition: opacity 0.5s;
   opacity: 1;
   cursor: pointer;
-
 }
 
 .edit-form__submit-button:hover {
