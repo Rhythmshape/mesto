@@ -1,43 +1,13 @@
-// массив карточек для добавления на страницу
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 // Получить доступ к DOM-элементам profile, popup, edit-form
 const popupEditProfile = document.querySelector('.popup_type_profile-editing');
 const popupElementAdd = document.querySelector('.popup_type_element-add');
 const popupImageOpen = document.querySelector('.popup_type_image-opening');
 const profile = document.querySelector('.profile');
 const editForm = document.querySelector('.edit-form');
-const popup = document.querySelector('.popup');
 const element = document.querySelector('.element');
 
 // Доступ к кнопкам
 // Получить доступ к кнопкe close
-const closeButton = popup.querySelector('.popup__close-button');
 const closeButtonProfile = popupEditProfile.querySelector("#profile-close");
 const closeButtonElement = popupElementAdd.querySelector("#element-close");
 const closeButtonImage = popupImageOpen.querySelector("#image-close");
@@ -97,15 +67,15 @@ function editProfileSubmitHandler (evt) {
 };
 
 //Функция создания карточки
-function createCard (CARD) {
+function createCard (card) {
   const newCard = newElementListItem.cloneNode(true); //скопировать элемент списка со всем содержимым  в newCard
   //Получить доступ к элементам названия и ссылки на картинку для карточки
   const newElementListItemImage = newCard.querySelector('.element__image');
   const newElementListItemTitle = newCard.querySelector('.element__title');
   //Присвоить значения атрибутам карточки
-  newElementListItemTitle.textContent = CARD.name;
-  newElementListItemImage.src = CARD.link;
-  newElementListItemImage.alt = CARD.name;
+  newElementListItemTitle.textContent = card.name;
+  newElementListItemImage.src = card.link;
+  newElementListItemImage.alt = card.name;
   //Добавить слушатель на кнопку лайк и реализовать toggle при нажатии
   newCard.querySelector('.element__like-button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__like-button_active');
@@ -116,9 +86,9 @@ function createCard (CARD) {
   });
   //Добавить слушатель на нажатие на карточку и открытие  popupImageOpen, а также присовить значение ссылки и названия атрибутам поп-апа
     newElementListItemImage.addEventListener('click', () => {
-    popupImage.src = CARD.link;
-    popupImageCaption.alt = CARD.name;
-    popupImageCaption.textContent = CARD.name;
+    popupImage.src = card.link;
+    popupImageCaption.alt = card.name;
+    popupImageCaption.textContent = card.name;
     openPopup(popupImageOpen);
     });
   // вернуть созданную карточку

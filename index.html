@@ -36,8 +36,8 @@
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <form id="profile-edit-form" name="profile-edit-form" class="edit-form">
-            <input type="text" id="author-name" name="author-name" class="edit-form__item edit-form__item_type_name">
-            <input type="text" id="author-description" name="author-description" class="edit-form__item edit-form__item_type_description">
+            <input type="text" id="author-name" name="author-name" placeholder="Имя профиля" class="edit-form__item edit-form__item_type_name">
+            <input type="text" id="author-description" name="author-description" placeholder="Описание" class="edit-form__item edit-form__item_type_description">
             <button id="profile-submit" type="submit" class="edit-form__submit-button">Сохранить</button>
           </form>
           <button id="profile-close" type="button" class="popup__close-button"></button>
@@ -73,6 +73,7 @@
           </article>
         </li>
       </template>
+    <script src="./scripts/initial-cards.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
