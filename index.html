@@ -35,10 +35,12 @@
       <div class="popup popup_type_profile-editing">
         <div class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form id="profile-edit-form" name="profile-edit-form" class="edit-form">
-            <input type="text" id="author-name" name="author-name" placeholder="Имя профиля" class="edit-form__item edit-form__item_type_name">
-            <input type="text" id="author-description" name="author-description" placeholder="Описание" class="edit-form__item edit-form__item_type_description">
-            <button id="profile-submit" type="submit" class="edit-form__submit-button">Сохранить</button>
+          <form id="profile-edit-form" name="profile-edit-form" class="edit-form" novalidate>
+            <input type="text" id="author-name" name="author-name" placeholder="Имя профиля" class="edit-form__item edit-form__item_type_name " minlength="2" maxlength="40" required>
+            <span class="edit-form__input-error author-name-error"></span>
+            <input type="text" id="author-description" name="author-description" placeholder="Описание" class="edit-form__item edit-form__item_type_description " minlength="2" maxlength="200" required>
+            <span class="edit-form__input-error author-description-error"></span>
+            <button id="profile-submit" type="submit" class="edit-form__submit-button ">Сохранить</button>
           </form>
           <button id="profile-close" type="button" class="popup__close-button"></button>
         </div>
@@ -46,10 +48,12 @@
       <div class="popup popup_type_element-add">
         <div class="popup__container">
           <h2 class="popup__title">Новое место</h2>
-          <form id="place-form" name="place-form" class="edit-form">
-            <input type="text" id="place-title" name="place-title" placeholder="Название" class="edit-form__item edit-form__item_type_place">
-            <input type="text" id="place-link" name="place-link" placeholder="Ссылка на картинку" class="edit-form__item edit-form__item_type_place-link">
-            <button id="place-submit" type="submit" class="edit-form__submit-button">Создать</button>
+          <form id="place-form" name="place-form" class="edit-form" novalidate>
+            <input type="text" id="place-title" name="place-title" placeholder="Название" class="edit-form__item edit-form__item_type_place"  minlength="2" maxlength="30" required>
+            <span class="edit-form__input-error place-title-error"></span>
+            <input type="url" id="place-link" name="place-link" placeholder="Ссылка на картинку" class="edit-form__item edit-form__item_type_place-link"  required>
+            <span class="edit-form__input-error place-link-error"></span>
+            <button id="place-submit" type="submit" class="edit-form__submit-button ">Создать</button>
           </form>
           <button id="element-close" type="button" class="popup__close-button"></button>
         </div>
@@ -75,5 +79,6 @@
       </template>
     <script src="./scripts/initial-cards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validation.js"></script>
   </body>
 </html>

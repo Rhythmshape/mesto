@@ -30,10 +30,12 @@
 @import url(../blocks/edit-form/edit-form.css);
 @import url(../blocks/edit-form/__item/edit-form__item.css);
 @import url(../blocks/edit-form/__item/_type/_name/edit-form__item_type_name.css);
-@import url(../blocks/edit-form/__item/_type/_description/edit-form__item_type_description.css);
 @import url(../blocks/edit-form/__item/_type/_place/edit-form__item_type_place.css);
-@import url(../blocks/edit-form/__item/_type/_place-link/edit-form__item_type_place-link.css);
+@import url(../blocks/edit-form/__item/_state/_error/edit-form__item_state_error.css);
+@import url(../blocks/edit-form/__input-error/edit-form__input-error.css);
+@import url(../blocks/edit-form/__input-error/_visible/edit-form__input-error_visible.css);
 @import url(../blocks/edit-form/__submit-button/edit-form__submit-button.css);
+@import url(../blocks/edit-form/__submit-button/_disabled/edit-form__submit-button_disabled.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__delete-button/element__delete-button.css);
 @import url(../blocks/element/__image/element__image.css);

@@ -1,6 +1,4 @@
 .edit-form__submit-button {
-  margin: 48px 0 0 0;
-  padding: 0;
   height: 50px;
   max-width: 358px;
   width: 100%;
@@ -16,18 +14,21 @@
   transition: opacity 0.5s;
   opacity: 1;
   cursor: pointer;
+  margin: 0 auto 37px;
+  padding: 13px 0 18px;
 }
 
 .edit-form__submit-button:hover {
-  opacity: .6;
+  opacity: .8;
 }
 
 @media screen and (max-width: 767px) {
   .edit-form__submit-button {
-    margin: 45px 0 0 0;
     font-size: 14px;
     line-height: 1.21;
     max-width: 238px;
     height: 46px;
+    margin: 0 auto 25px;
+    padding: 14px 0;
   }
 }
