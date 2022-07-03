@@ -1,40 +1,40 @@
-// Получить доступ к DOM-элементам profile, popup, edit-form
+// Получить доступ к DOM-элементам profile, popup
 const popupEditProfile = document.querySelector('.popup_type_profile-editing');
 const popupElementAdd = document.querySelector('.popup_type_element-add');
 const popupImageOpen = document.querySelector('.popup_type_image-opening');
 const profile = document.querySelector('.profile');
-const editForm = document.querySelector('.edit-form');
+// Доступ к шаблону карточки
 const element = document.querySelector('.element');
 // Доступ к оверлею
 const overlays = document.querySelectorAll('.popup');
-// Доступ к кнопкам закрытия
-const closeButtons = document.querySelectorAll('.popup__close-button');
-// Получить доступ к кнопкe edit
-const editButton = profile.querySelector('.profile__edit-button');
-// Получить доступ к кнопкe add
-const addButton = profile.querySelector('.profile__add-button');
+// Доступ к кнопкам закрытия поп-апов
+const popupCloseButtons = document.querySelectorAll('.popup__close-button');
+// Получить доступ к кнопкe edit для открытия поп-апа редактирования профиля
+const popupProfileOpenButton = profile.querySelector('.profile__edit-button');
+// Получить доступ к кнопкe add для открытия поп-апа добавления новой карточки с местом
+const popupPlaceOpenButton = profile.querySelector('.profile__add-button');
 
 // Получить доступ к элементам profile для заполнения формы popupEditProfil
 const profileName = profile.querySelector('.profile__name');
 const profileDescription = profile.querySelector('.profile__description');
-const profileSubmitButton = document.querySelector('#profile-submit');
 
-// Получить доступ к элементам profile-edit-form для заполнения формы popupEditProfile
-const editFormProfile = document.querySelector('#profile-edit-form');
-const editFormItemName = editForm.querySelector('.edit-form__item_type_name');
-const editFormItemDescription = editForm.querySelector('.edit-form__item_type_description');
+// Получить доступ к форме profile-edit-form для popupEditProfile и ее элементам
+const formProfile = document.querySelector('#profile-edit-form');
+const formProfileName = document.querySelector('#author-name');
+const formProfileDescription = document.querySelector('#author-description');
+const formProfileSubmitButton = document.querySelector('#profile-submit');
 
-// Получить доступ к элементам place-form для popupElementAdd
-const editFormPlace = document.querySelector('#place-form');
-const editFormPlaceTitle = document.querySelector('#place-title');
-const editFormPlaceLink = document.querySelector('#place-link');
-const placeSubmitButton = document.querySelector('#place-submit');
+// Получить доступ к форме place-form  для popupElementAdd и ее элементам
+const formPlace = document.querySelector('#place-form');
+const formPlaceTitle = document.querySelector('#place-title');
+const formPlaceLink = document.querySelector('#place-link');
+const formPlaceSubmitButton = document.querySelector('#place-submit');
 
 // Получить доступ к списку карточек
 const elementsList = document.querySelector('.elements__list'); //<ul>
  //создание документ-фрагмента из шаблона
 const elementTemplate = document.querySelector('.element-template').content;
-// Получить доступ к элеенту списка карточек
+// Получить доступ к элементу списка карточек
 const newElementListItem = elementTemplate.querySelector('.elements__list-item');
 
 // Получить доступ к элементам popupImageOpen
@@ -69,17 +69,17 @@ const keyDownHahndler = (evt) => {
 //Функция открытия popupEditProfile и заполнения значений формы из элементов profile
 function openEditProfile() {
   openPopup(popupEditProfile);
-  editFormItemName.value = profileName.textContent;
-  editFormItemDescription.value = profileDescription.textContent;
+  formProfileName.value = profileName.textContent;
+  formProfileDescription.value = profileDescription.textContent;
 };
 
 // Функция  отправки формы редактирования профиля и замена текста элементов профиля на вновь введенное содержимое формы
 function editProfileSubmitHandler (evt) {
   evt.preventDefault();
-  profileName.textContent = editFormItemName.value;
-  profileDescription.textContent = editFormItemDescription.value;
+  profileName.textContent = formProfileName.value;
+  profileDescription.textContent = formProfileDescription.value;
   evt.target.reset(); //Сбросить значения последней отправленной формы через поп-ап
-  disableButton(profileSubmitButton, validationAttributes);
+  disableButton(formProfileSubmitButton, validationAttributes);
   closePopup(popupEditProfile) ;
 };
 
@@ -89,24 +89,25 @@ function createCard (card) {
   //Получить доступ к элементам названия и ссылки на картинку для карточки
   const newElementListItemImage = newCard.querySelector('.element__image');
   const newElementListItemTitle = newCard.querySelector('.element__title');
-  const likeButton = newCard.querySelector('.element__like-button');
-  const deleteButton = newCard.querySelector('.element__delete-button');
+  //Получить доступ к кнопкам лайка и удаления карточки
+  const cardLikeButton = newCard.querySelector('.element__like-button');
+  const cardDeleteButton = newCard.querySelector('.element__delete-button');
   //Присвоить значения атрибутам карточки
   newElementListItemTitle.textContent = card.name;
   newElementListItemImage.src = card.link;
   newElementListItemImage.alt = card.name;
   //Добавить слушатель на кнопку лайк и реализовать toggle при нажатии
-    likeButton.addEventListener('click', function(evt) {
+    cardLikeButton.addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__like-button_active');
   });
   //Добавить слушатель на кнопку удаления карточки и реализовать ее удаление
-    deleteButton.addEventListener('click', function(evt) {
+    cardDeleteButton.addEventListener('click', function(evt) {
     newCard.remove();
   });
   //Добавить слушатель на нажатие на карточку и открытие  popupImageOpen, а также присовить значение ссылки и названия атрибутам поп-апа
     newElementListItemImage.addEventListener('click', () => {
     popupImage.src = card.link;
-    popupImageCaption.alt = card.name;
+    popupImage.alt = card.name;
     popupImageCaption.textContent = card.name;
     openPopup(popupImageOpen);
     });
@@ -124,25 +125,25 @@ initialCards.forEach(function(item) {
 function addCardSubmitHandler (evt) {
     evt.preventDefault();
      const addedCards = {
-    link :editFormPlaceLink.value,
-    name : editFormPlaceTitle.value
+    link : formPlaceLink.value,
+    name : formPlaceTitle.value
     };
     const addedCard = createCard(addedCards);
     elementsList.prepend(addedCard);// Добавить карточку в начало списка карточек
     evt.target.reset(); //Сбросить значения последней отправленной формы через поп-ап
-    disableButton(placeSubmitButton, validationAttributes);
+    disableButton(formPlaceSubmitButton, validationAttributes);
     closePopup(popupElementAdd);
   };
 
 // Функция  закрытия всех поп-апов при клике на крестик
-closeButtons.forEach((button) => {
+popupCloseButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
 
 // Функция  закрытия всех поп-апов при клике на оверлей
 overlays.forEach((overlay) => {
-  overlay.addEventListener('click', (evt) => {
+  overlay.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(overlay);
     }
@@ -150,10 +151,10 @@ overlays.forEach((overlay) => {
 });
 
 //Добавить слушатели на нажатие кнопок открытия и сабмита
-editButton.addEventListener('click', openEditProfile);
-editFormProfile.addEventListener('submit', editProfileSubmitHandler);
-addButton.addEventListener("click", () => openPopup(popupElementAdd));
-editFormPlace.addEventListener('submit', addCardSubmitHandler );
+popupProfileOpenButton.addEventListener('click', openEditProfile);
+formProfile.addEventListener('submit', editProfileSubmitHandler);
+popupPlaceOpenButton.addEventListener("click", () => openPopup(popupElementAdd));
+formPlace.addEventListener('submit', addCardSubmitHandler );
 
 
 
