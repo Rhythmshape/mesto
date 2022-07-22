@@ -1,3 +1,6 @@
+import { Card } from './Card.js';  //импорт классов Card и FormValidator
+import { FormValidator } from './FormValidator.js';
+
 // Получить доступ к DOM-элементам profile, popup
 const popupEditProfile = document.querySelector('.popup_type_profile-editing');
 const popupElementAdd = document.querySelector('.popup_type_element-add');
@@ -32,10 +35,6 @@ const formPlaceSubmitButton = document.querySelector('#place-submit');
 
 // Получить доступ к списку карточек
 const elementsList = document.querySelector('.elements__list'); //<ul>
- //создание документ-фрагмента из шаблона
-const elementTemplate = document.querySelector('.element-template').content;
-// Получить доступ к элементу списка карточек
-const newElementListItem = elementTemplate.querySelector('.elements__list-item');
 
 // Получить доступ к элементам popupImageOpen
 const popupImage = popupImageOpen.querySelector('.popup__image');
@@ -52,6 +51,7 @@ const closePopup = function (popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', keyDownHahndler);
 };
+
 // Функция закрытия любого текущего открытого попапа
 const closeCurrentOpenedPopup = () => {
   const currentOpenedPopup = document.querySelector('.popup_opened');
@@ -59,6 +59,7 @@ const closeCurrentOpenedPopup = () => {
     closePopup(currentOpenedPopup);
   };
 };
+
 // Функция закрытия popup по клавише Escape
 const keyDownHahndler = (evt) => {
   if (evt.key === 'Escape') {
@@ -66,80 +67,59 @@ const keyDownHahndler = (evt) => {
   }
 };
 
-//Функция открытия popupEditProfile и заполнения значений формы из элементов profile
-function openEditProfile() {
-  openPopup(popupEditProfile);
+// Функция заполнения инпутов формы профиля
+const fillFormEditProfile = (item) => {
   formProfileName.value = profileName.textContent;
   formProfileDescription.value = profileDescription.textContent;
 };
 
+//Функция создания карточки
+const createCard = (item) => {
+  const card = new Card(item, '#template-for-element', handleCardElementClick);
+  const cardElement = card.generateCard();
+  return cardElement;
+};
+
+//Пройти по массиву исходных карточек и добавить каждую карточку в конец списка карточек
+initialCards.forEach((item) => {
+  const viewInitialCard = createCard(item);
+  elementsList.append(viewInitialCard);
+});
+
+//Функция присвоения значений изображению и подписи попапа картинки и его открытие
+function handleCardElementClick(title, image) {
+  popupImage.src = image;
+  popupImage.alt = title;
+  popupImageCaption.textContent = title;
+  openPopup(popupImageOpen);
+};
+
 // Функция  отправки формы редактирования профиля и замена текста элементов профиля на вновь введенное содержимое формы
-function editProfileSubmitHandler (evt) {
+function editProfileSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = formProfileName.value;
   profileDescription.textContent = formProfileDescription.value;
-  evt.target.reset(); //Сбросить значения последней отправленной формы через поп-ап
-  disableButton(formProfileSubmitButton, validationAttributes);
-  closePopup(popupEditProfile) ;
+  closePopup(popupEditProfile);
 };
 
-//Функция создания карточки
-function createCard (card) {
-  const newCard = newElementListItem.cloneNode(true); //скопировать элемент списка со всем содержимым  в newCard
-  //Получить доступ к элементам названия и ссылки на картинку для карточки
-  const newElementListItemImage = newCard.querySelector('.element__image');
-  const newElementListItemTitle = newCard.querySelector('.element__title');
-  //Получить доступ к кнопкам лайка и удаления карточки
-  const cardLikeButton = newCard.querySelector('.element__like-button');
-  const cardDeleteButton = newCard.querySelector('.element__delete-button');
-  //Присвоить значения атрибутам карточки
-  newElementListItemTitle.textContent = card.name;
-  newElementListItemImage.src = card.link;
-  newElementListItemImage.alt = card.name;
-  //Добавить слушатель на кнопку лайк и реализовать toggle при нажатии
-    cardLikeButton.addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like-button_active');
-  });
-  //Добавить слушатель на кнопку удаления карточки и реализовать ее удаление
-    cardDeleteButton.addEventListener('click', function(evt) {
-    newCard.remove();
-  });
-  //Добавить слушатель на нажатие на карточку и открытие  popupImageOpen, а также присовить значение ссылки и названия атрибутам поп-апа
-    newElementListItemImage.addEventListener('click', () => {
-    popupImage.src = card.link;
-    popupImage.alt = card.name;
-    popupImageCaption.textContent = card.name;
-    openPopup(popupImageOpen);
-    });
-  // вернуть созданную карточку
-  return newCard;
-};
-
-//Пройтись по всем переменным исходного массива и создать карточки
-initialCards.forEach(function(item) {
-  const appearCard = createCard (item);
-  elementsList.append(appearCard);// Добавить карточку в конец списка карточек
-});
-
-// Функция  отправки формы добавления карточки и присвоение значений атрибутам картинок из формы поп-ап
-function addCardSubmitHandler (evt) {
-    evt.preventDefault();
-     const addedCards = {
-    link : formPlaceLink.value,
-    name : formPlaceTitle.value
-    };
-    const addedCard = createCard(addedCards);
-    elementsList.prepend(addedCard);// Добавить карточку в начало списка карточек
-    evt.target.reset(); //Сбросить значения последней отправленной формы через поп-ап
-    disableButton(formPlaceSubmitButton, validationAttributes);
-    closePopup(popupElementAdd);
+// Функция  отправки формы добавления карточки и присвоение значений атрибутам карточек из заполненной формы
+function addCardSubmitHandler(evt) {
+  evt.preventDefault();
+  const addedCards = {
+    link: formPlaceLink.value,
+    name: formPlaceTitle.value
   };
+  const addedCard = createCard(addedCards);
+  elementsList.prepend(addedCard);// Добавить карточку в начало списка карточек
+  closePopup(popupElementAdd);
+};
 
 // Функция  закрытия всех поп-апов при клике на крестик
 popupCloseButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
+
 
 // Функция  закрытия всех поп-апов при клике на оверлей
 overlays.forEach((overlay) => {
@@ -150,11 +130,34 @@ overlays.forEach((overlay) => {
   });
 });
 
-//Добавить слушатели на нажатие кнопок открытия и сабмита
-popupProfileOpenButton.addEventListener('click', openEditProfile);
+// создать массив из форм
+const formList = Array.from(document.querySelectorAll(validationAttributes.formSelector));
+// создать валидатор форм места и профиля
+const profileFormValidator = new FormValidator(validationAttributes, formProfile);
+const placeFormValidator = new FormValidator(validationAttributes, formPlace);
+
+
+// пройтись по массиву форм и вызвать метод enableValidation для валидатора каждой формы
+formList.forEach((formElement) => {
+  const formValidator = new FormValidator(validationAttributes, formElement);
+  formValidator.enableValidation();
+})
+
+//Добавить слушатели на нажатие кнопок открытия попапов профиля и места и сабмита форм
+popupProfileOpenButton.addEventListener('click', function () {
+  profileFormValidator.resetFormValidation();// сбросить валидацию формы
+  fillFormEditProfile();
+  openPopup(popupEditProfile);
+});
+
 formProfile.addEventListener('submit', editProfileSubmitHandler);
-popupPlaceOpenButton.addEventListener("click", () => openPopup(popupElementAdd));
-formPlace.addEventListener('submit', addCardSubmitHandler );
+
+popupPlaceOpenButton.addEventListener("click", function () {
+  placeFormValidator.resetFormValidation();// сбросить валидацию формы
+  openPopup(popupElementAdd);
+});
+
+formPlace.addEventListener('submit', addCardSubmitHandler);
 
 
 
