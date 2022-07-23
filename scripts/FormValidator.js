@@ -22,8 +22,7 @@ class FormValidator {
   };
 
   _resetInputErrors() {
-    const inputElements = this._formElement.querySelectorAll(this._attributes.inputSelector);
-    inputElements.forEach((element) => {
+    this._inputList.forEach((element) => {
       this._hideInputError(element);
     });
   };
@@ -42,7 +41,7 @@ class FormValidator {
     });
   };
 
-  _toggleButtonState(buttonElement) {
+  _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._disableButton();
     } else {

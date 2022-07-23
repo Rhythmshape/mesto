@@ -1,5 +1,7 @@
 import { Card } from './Card.js';  //импорт классов Card и FormValidator
 import { FormValidator } from './FormValidator.js';
+import { initialCards } from './initial-cards.js';//импорт cущностей initial-cards и validationAttributes
+import { validationAttributes } from './validationAttributes.js';
 
 // Получить доступ к DOM-элементам profile, popup
 const popupEditProfile = document.querySelector('.popup_type_profile-editing');
@@ -34,7 +36,7 @@ const formPlaceLink = document.querySelector('#place-link');
 const formPlaceSubmitButton = document.querySelector('#place-submit');
 
 // Получить доступ к списку карточек
-const elementsList = document.querySelector('.elements__list'); //<ul>
+const cardsContainer = document.querySelector('.elements__list'); //<ul>
 
 // Получить доступ к элементам popupImageOpen
 const popupImage = popupImageOpen.querySelector('.popup__image');
@@ -67,10 +69,15 @@ const keyDownHahndler = (evt) => {
   }
 };
 
-// Функция заполнения инпутов формы профиля
+// Функция заполнения инпутов формы профиля при открытии
 const fillFormEditProfile = (item) => {
   formProfileName.value = profileName.textContent;
   formProfileDescription.value = profileDescription.textContent;
+};
+// Функция заполнения инпутов формы места при открытии
+const fillFormPlace = (item) => {
+  formPlaceLink.value = '';
+  formPlaceTitle.value = '';
 };
 
 //Функция создания карточки
@@ -83,7 +90,7 @@ const createCard = (item) => {
 //Пройти по массиву исходных карточек и добавить каждую карточку в конец списка карточек
 initialCards.forEach((item) => {
   const viewInitialCard = createCard(item);
-  elementsList.append(viewInitialCard);
+  cardsContainer.append(viewInitialCard);
 });
 
 //Функция присвоения значений изображению и подписи попапа картинки и его открытие
@@ -110,7 +117,7 @@ function addCardSubmitHandler(evt) {
     name: formPlaceTitle.value
   };
   const addedCard = createCard(addedCards);
-  elementsList.prepend(addedCard);// Добавить карточку в начало списка карточек
+  cardsContainer.prepend(addedCard);// Добавить карточку в начало списка карточек
   closePopup(popupElementAdd);
 };
 
@@ -130,18 +137,13 @@ overlays.forEach((overlay) => {
   });
 });
 
-// создать массив из форм
-const formList = Array.from(document.querySelectorAll(validationAttributes.formSelector));
 // создать валидатор форм места и профиля
 const profileFormValidator = new FormValidator(validationAttributes, formProfile);
 const placeFormValidator = new FormValidator(validationAttributes, formPlace);
 
-
-// пройтись по массиву форм и вызвать метод enableValidation для валидатора каждой формы
-formList.forEach((formElement) => {
-  const formValidator = new FormValidator(validationAttributes, formElement);
-  formValidator.enableValidation();
-})
+//вызвать метод enableValidation для валидатора каждой формы
+placeFormValidator.enableValidation();
+profileFormValidator.enableValidation();
 
 //Добавить слушатели на нажатие кнопок открытия попапов профиля и места и сабмита форм
 popupProfileOpenButton.addEventListener('click', function () {
@@ -154,6 +156,7 @@ formProfile.addEventListener('submit', editProfileSubmitHandler);
 
 popupPlaceOpenButton.addEventListener("click", function () {
   placeFormValidator.resetFormValidation();// сбросить валидацию формы
+  fillFormPlace();
   openPopup(popupElementAdd);
 });
 

@@ -1,4 +1,4 @@
-const validationAttributes = {
+export const validationAttributes = {
   formSelector: '.edit-form',
   inputSelector: '.edit-form__item',
   submitButtonSelector: '.edit-form__submit-button',

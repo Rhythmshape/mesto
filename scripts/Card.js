@@ -25,6 +25,7 @@ class Card {
 //метод удаления карточки
   _handleDeleteButton() {
     this._element.remove();
+    this._element = null;
   }
 
 //метод установки слушателей
