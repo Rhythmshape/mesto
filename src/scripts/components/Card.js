@@ -1,5 +1,5 @@
-class Card {
-  constructor(data, template, handleCardElementClick) {
+export default class Card {
+  constructor({data, template, handleCardElementClick}) {
     this._title = data.name;
     this._image = data.link;
     this._template = template;
@@ -60,5 +60,3 @@ class Card {
   }
 }
 
-//экспорт класса Card
-export { Card }

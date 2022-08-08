@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(attributes, formElement) {
     this._attributes = { ...attributes };
     this._formElement = formElement;
@@ -75,4 +75,3 @@ class FormValidator {
 
 };
 
-export { FormValidator };
