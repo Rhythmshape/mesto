@@ -55,9 +55,6 @@ const formProfileDescription = document.querySelector('#author-description');
 // Получить доступ к форме place-form  для popupElementAdd и ее элементам
 const formPlace = document.querySelector('#place-form');
 
-// Получить доступ к списку карточек
-const cardsContainer = document.querySelector('.elements__list'); //<ul>
-
 export {
   initialCards,
   cardsToPut,
@@ -66,7 +63,6 @@ export {
   profileDescription,
   formProfileName,
   formProfileDescription,
-  cardsContainer,
   formProfile,
   formPlace,
   popupProfileOpenButton,

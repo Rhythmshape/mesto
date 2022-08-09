@@ -5,11 +5,10 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    const profileInfo = {
+    return {
       name: this._profileNameSelector.textContent,
       description: this._profileDescriptionSelector.textContent
     };
-    return profileInfo;
   }
 
   setUserInfo(data) {

@@ -1,4 +1,4 @@
-import './../../styles/index.css';
+import './index.css';
 
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -64,7 +64,7 @@ const cardsSection = new Section({
     cardsSection.addItem(createCard(item));
   },
 },
-  cardsContainer
+'.elements__list'
 );
 
 //попап добавления карточки места

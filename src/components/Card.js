@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({data, template, handleCardElementClick}) {
+  constructor({ data, template, handleCardElementClick }) {
     this._title = data.name;
     this._image = data.link;
     this._template = template;
@@ -9,26 +9,25 @@ export default class Card {
 
   //метод получения шаблона карточки путем клонирования
   _getTemplate() {
-    const cardTemplate = document.querySelector(this._template);
-    const cardElement = cardTemplate
+    return document
+      .querySelector(this._template)
       .content
       .querySelector('.elements__list-item')
       .cloneNode(true);
-    return cardElement;
   }
 
-//метод постановки лайка
+  //метод постановки лайка
   _handleLikeButton() {
     this._cardLikeButton.classList.toggle('element__like-button_active');
   }
 
-//метод удаления карточки
+  //метод удаления карточки
   _handleDeleteButton() {
     this._element.remove();
     this._element = null;
   }
 
-//метод установки слушателей
+  //метод установки слушателей
   _setEventListeners() {
     this._newElementListItemImage = this._element.querySelector('.element__image');
     this._cardLikeButton = this._element.querySelector('.element__like-button');
