@@ -1,25 +1,26 @@
 import Popup from './Popup.js';
 
 export default class PopupWithConfirmation extends Popup {
-  constructor({popupSelector, handleFormSubmit}) {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._handleFormSubmit = handleFormSubmit;
-    this._formSelector = this._popup.querySelector('.edit-form');
+    this._popup = document.querySelector(popupSelector);
   }
-
+  //публичный метод установки сабмита
+  handleConfirmationSubmit(callbackSubmit) {
+    this._callbackSubmit = callbackSubmit;
+  };
   //публичный метод класса PopupWithConfirmation для открытия попапа
-  // и определения объекта карточки, на которой будут соверщать действие
-
-  open(card) {
+  // и определения аргумента колбэка (карточки), на которой будут совершать действие сабмита
+  open(arg) {
     super.open();
-    this._card = card;
-  }
+    this._callbackArg = arg;
+  };
 
   setEventListeners() {
     super.setEventListeners();
-    this._formSelector.addEventListener('submit', (evt) => {
+    this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._card);
+      this._callbackSubmit(this._callbackArg);
     })
   }
 

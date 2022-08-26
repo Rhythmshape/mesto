@@ -14,8 +14,6 @@ import {
   profileName,
   profileDescription,
   profileAvatar,
-  formProfileName,
-  formProfileDescription,
   formProfile,
   formPlace,
   formAvatar,
@@ -49,9 +47,9 @@ Promise.all([api.getUserInfoApi(), api.getInitialCards()])
 
 //создание экземпляра класса с информацией о пользователе (имя, описание, аватар)
 const profileInfo = new UserInfo({
-  profileNameSelector: profileName,
-  profileDescriptionSelector: profileDescription,
-  avatarSelector: profileAvatar,
+  userProfileName: profileName,
+  userProfileDescription: profileDescription,
+  userProfileAvatar: profileAvatar,
 }
 );
 
@@ -106,9 +104,9 @@ const popupImageOpen = new PopupWithImage(
 popupImageOpen.setEventListeners();
 
 //Попап подтверждения удаления карточки
-const popupDeleteCard = new PopupWithConfirmation({
-  popupSelector: '.popup_type_element-delete',
-  handleFormSubmit: (card) => {
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_element-delete');
+  popupDeleteCard.handleConfirmationSubmit(
+     card => {
     api.deleteCard(card.cardId)
       .then(() => {
         card.deleteCard();
@@ -118,7 +116,7 @@ const popupDeleteCard = new PopupWithConfirmation({
         console.log(err);
       })
   }
-});
+)
 
 popupDeleteCard.setEventListeners();
 
@@ -127,7 +125,7 @@ const createCard = (item) => {
   const card = new Card({
     data: item,
     template: '#template-for-element',
-    handleCardElementClick: (title, image) => {
+    handleCardClick: (title, image) => {
       popupImageOpen.open(title, image);
     },
     handleAddLike: (card) => {
@@ -153,8 +151,8 @@ const createCard = (item) => {
     },
   }, user._id);
 
-  const cardElement = card.generateCard();
-  return cardElement;
+  const newCard = card.generateCard();
+  return newCard;
 };
 
 //создание экземпляра секции, отвечающей за добавление исходных карточек в контейнер
@@ -167,25 +165,25 @@ const cardsSection = new Section({
 );
 
 //попап добавления карточки места
-const popupElementAdd = new PopupWithForm({
+const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_type_element-add',
   handleFormSubmit: (item) => {
-    popupElementAdd.showLoading(true);
+    popupAddCard.showLoading(true);
     api.addCard(item)
       .then((data) => {
         cardsSection.addItem(createCard(data));
-        popupElementAdd.close();
+        popupAddCard.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupElementAdd.showLoading(false);
+        popupAddCard.showLoading(false);
       });
   }
 }
 );
-popupElementAdd.setEventListeners();
+popupAddCard.setEventListeners();
 
 // Валидация форм
 // создать валидатор форм места, профиля и аватара
@@ -215,7 +213,7 @@ popupAvatarOpenButton.addEventListener('click', function () {
 
 popupPlaceOpenButton.addEventListener("click", function () {
   placeFormValidator.resetFormValidation();// сбросить валидацию формы
-  popupElementAdd.open();
+  popupAddCard.open();
 });
 
 

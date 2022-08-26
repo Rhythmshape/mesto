@@ -1,27 +1,27 @@
 export default class UserInfo {
-  constructor({ profileNameSelector, profileDescriptionSelector, avatarSelector }) {
-    this._profileNameSelector = profileNameSelector;
-    this._profileDescriptionSelector = profileDescriptionSelector;
-    this._avatarSelector = avatarSelector;
+  constructor({ userProfileName, userProfileDescription, userProfileAvatar }) {
+    this._profileName = userProfileName;
+    this._profileDescription = userProfileDescription;
+    this._profileAvatar = userProfileAvatar;
   }
 
 // возврат данных пользователя в виде объекта
   getUserInfo() {
     return {
-      name: this._profileNameSelector.textContent,
-      about: this._profileDescriptionSelector.textContent,
-      avatar: this._avatarSelector.src,
+      name: this._profileName.textContent,
+      about: this._profileDescription.textContent,
+      avatar: this._profileAvatar.src,
     };
   }
 
   //добавление данных пользователя на страницу
   setUserInfo(data) {
-    this._profileNameSelector.textContent = data.name;
-    this._profileDescriptionSelector.textContent = data.about;
+    this._profileName.textContent = data.name;
+    this._profileDescription.textContent = data.about;
   }
 //добавление аватара на страницу
   setUserAvatar(data) {
-    this._avatarSelector.src = data.avatar;
-    this._avatarSelector.alt = data.name;
+    this._profileAvatar.src = data.avatar;
+    this._profileAvatar.alt = data.name;
   }
 }

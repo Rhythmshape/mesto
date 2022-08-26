@@ -16,7 +16,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 
   //Отредактировать профиль пользователя (имя/описание)
@@ -24,23 +24,18 @@ export default class Api {
     return fetch(`${this._serverUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
-      })
+      body: JSON.stringify({...data})
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
   //Обновить аватар пользователя на странице
   editUserAvatar(data) {
     return fetch(`${this._serverUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar,
-      })
+      body: JSON.stringify({...data})
     })
-      .then(res => this._getResponseData(res))
+      .then(this._getResponseData);
   }
 
   //Загрузить исходные карточки с сервера
@@ -48,7 +43,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards`, {
       headers: this._headers,
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 
   //Добавить новую карточку
@@ -56,12 +51,9 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link
-      })
+      body: JSON.stringify({...data})
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 
   //Удалить карточку
@@ -70,7 +62,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 
   //Поставить лайк карточке
@@ -79,7 +71,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers,
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 
   //Убрать лайк
@@ -88,7 +80,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => this._getResponseData(res));
+      .then(this._getResponseData);
   }
 }
 

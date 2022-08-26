@@ -22,8 +22,6 @@ const profileAvatar = document.querySelector('.profile__avatar');
 
 // Получить доступ к форме profile-edit-form для popupEditProfile и ее элементам
 const formProfile = document.querySelector('#profile-edit-form');
-const formProfileName = document.querySelector('#author-name');
-const formProfileDescription = document.querySelector('#author-description');
 
 // Получить доступ к форме place-form  для popupElementAdd и ее элементам
 const formPlace = document.querySelector('#place-form');
@@ -37,8 +35,6 @@ export {
   profileName,
   profileDescription,
   profileAvatar,
-  formProfileName,
-  formProfileDescription,
   formProfile,
   formPlace,
   popupProfileOpenButton,
