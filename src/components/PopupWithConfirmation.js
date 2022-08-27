@@ -3,10 +3,9 @@ import Popup from './Popup.js';
 export default class PopupWithConfirmation extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-    this._popup = document.querySelector(popupSelector);
   }
   //публичный метод установки сабмита
-  handleConfirmationSubmit(callbackSubmit) {
+  setSubmitHandler(callbackSubmit) {
     this._callbackSubmit = callbackSubmit;
   };
   //публичный метод класса PopupWithConfirmation для открытия попапа

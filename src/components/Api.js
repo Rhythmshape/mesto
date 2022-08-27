@@ -24,7 +24,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({...data})
+      body: JSON.stringify({ ...data })
     })
       .then(this._getResponseData);
   }
@@ -33,7 +33,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({...data})
+      body: JSON.stringify({ ...data })
     })
       .then(this._getResponseData);
   }
@@ -51,7 +51,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({...data})
+      body: JSON.stringify({ ...data })
     })
       .then(this._getResponseData);
   }

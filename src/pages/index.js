@@ -105,8 +105,8 @@ popupImageOpen.setEventListeners();
 
 //Попап подтверждения удаления карточки
 const popupDeleteCard = new PopupWithConfirmation('.popup_type_element-delete');
-  popupDeleteCard.handleConfirmationSubmit(
-     card => {
+popupDeleteCard.setSubmitHandler(
+  card => {
     api.deleteCard(card.cardId)
       .then(() => {
         card.deleteCard();
